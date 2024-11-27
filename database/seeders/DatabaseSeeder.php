@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Lists;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,11 +14,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory(10)->create();
+        Lists::factory(10)->create();
+        
+        // User::factory()->create([
+        //     'name' => 'Test User1',
+        //     'email' => 'test1@example.com',
+        // ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Lists::create([
+        //     'subject' => 'Good Morning',
+        //     'email' => 'sss@gmail.com',
+        //     'context' => 'Good Content Life is too short',
+        // ]);
+
+        // Lists::create([
+        //     'subject' => 'Good Afternoon',
+        //     'email' => 'aaa@gmail.com',
+        //     'context' => 'Bad Content Life is too short',
+        // ]);
     }
 }
