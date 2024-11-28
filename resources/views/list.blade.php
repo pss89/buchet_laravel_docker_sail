@@ -13,27 +13,32 @@
 
 <p>{{ $getItem }}</p> --}}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>{{ $heading }}</h1>
+@extends('layout')
 
-    {{-- @if(count($lists) == 0)
-        <p>게시글이 없습니다.</p>
-    @endif --}}
-    @if(count($lists) > 0)
-        <p>자료가 {{ count($lists) }} 건이 있습니다.</p>
-    @endif
-
+@section('content')
+<section class="post-list">
     @foreach ($lists as $row)
-    <h2><a href="/list/{{ $row['id'] }}">{{ $row['subject'] }}</a></h2>
-    <p>{{ $row['context'] }}</p>
+        <article class="post">
+            <x-lists-card :row="$row" />
+        </article>
     @endforeach
-</body>
-</html>
+</section>
+
+@if(count($lists) > 0)
+    <p>자료가 {{ count($lists) }} 건이 있습니다.</p>
+@endif
+{{-- <h1>{{ $heading }}</h1> --}}
+
+{{-- @if(count($lists) == 0)
+    <p>게시글이 없습니다.</p>
+@endif --}}
+{{-- @if(count($lists) > 0)
+    <p>자료가 {{ count($lists) }} 건이 있습니다.</p>
+@endif --}}
+
+{{-- @foreach ($lists as $row)
+<h2><a href="/list/{{ $row['id'] }}">{{ $row['subject'] }}</a></h2>
+<p>{{ $row['context'] }}</p>
+@endforeach --}}
+
+@endsection
