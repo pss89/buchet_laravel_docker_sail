@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,11 +11,15 @@
     <form action="/55" method="POST">
         @csrf
         @method('PUT')
-        {{-- @method('DELETE') --}}
-        {{-- <input type="hidden" name="_method" value="PUT"> --}}
-        {{-- <input type="hidden" name="_method" value="DELETE"> --}}
-        {{-- <input type="text" name="username"> --}}
+        @method('DELETE')
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="text" name="username">
         <button>submit</button>
     </form>
 </body>
-</html>
+</html> --}}
+
+<x-layout>
+    <h1>Hello World</h1>
+</x-layout>

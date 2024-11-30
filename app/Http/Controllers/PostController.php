@@ -13,6 +13,12 @@ class PostController extends Controller
     public function index()
     {
         //
+        $name = '홍길동';
+        $age = 20;
+
+        $postList = ['게시물1', '게시물2', '게시물3'];
+        // return view('posts.index', ['name' => $name, 'age' => $age]);
+        return view('posts.index', compact('name', 'age', 'postList'));
     }
 
     /**
@@ -22,6 +28,7 @@ class PostController extends Controller
     public function create()
     {
         //
+        return view('posts.create');
     }
 
     /**
@@ -39,6 +46,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         //
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -48,6 +56,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         //
+        return view('posts.edit', compact('post'));
     }
 
     /**
