@@ -13,12 +13,15 @@ class PostController extends Controller
     public function index()
     {
         //
-        $name = '홍길동';
-        $age = 20;
+        // $name = '홍길동';
+        // $age = 20;
 
-        $postList = ['게시물1', '게시물2', '게시물3'];
+        // $posts = ['게시물1', '게시물2', '게시물3'];
         // return view('posts.index', ['name' => $name, 'age' => $age]);
-        return view('posts.index', compact('name', 'age', 'postList'));
+        // return view('posts.index', compact('name', 'age', 'posts'));
+        $posts = Post::all();
+
+        return view('posts.index', compact('posts')); // ['posts' => $posts]
     }
 
     /**
@@ -50,9 +53,13 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
+    // public function show(Post $post)
+    // public function show($id)
     public function show(Post $post)
     {
         //
+        // $posts = Post::find($id);
+
         return view('posts.show', compact('post'));
     }
 
