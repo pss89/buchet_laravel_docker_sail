@@ -79,6 +79,15 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         //
+        $validated = $request->validate([
+            // 'title' => 'required|min:3',
+            'title' => ['required', 'min:3', 'max:200'],
+            'content' => ['required', 'min:5'],
+        ]);
+
+        $post->update($validated);
+
+        return to_route('posts.index');
     }
 
     /**
@@ -87,5 +96,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+        $post->delete();
+        return to_route('posts.index');
     }
 }

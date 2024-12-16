@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\LoginUserController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RegisterUserController;
+
 // use App\Models\Lists;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -11,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome'); // 위에 코드랑 같은 의미
 
 Route::resource('posts', PostController::class); // 한방에 처리하는 방법 (route에 이름을 자동 부여)
+
+Route::get('/register', [RegisterUserController::class, 'register'])->name('register');
+Route::post('/register', [RegisterUserController::class, 'store'])->name('register.store');
+Route::get('/login', [LoginUserController::class, 'login'])->name('login');
+Route::post('/login', [LoginUserController::class, 'store'])->name('login.store');
 
 // Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 // Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
