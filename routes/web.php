@@ -33,7 +33,9 @@ Route::middleware('auth')->group(function (){
 // 글목록
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 // 글 상세보기
-Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/posts/{post}', [PostController::class, 'show'])
+    ->middleware('custom-post-mid')
+    ->name('posts.show');
 
 // 로그인 하지 않은 사람만 접근근
 Route::middleware('guest')->group(function (){
