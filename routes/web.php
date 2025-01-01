@@ -5,7 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterUserController;
 
 // use App\Models\Lists;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -13,12 +13,35 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::view('/', 'welcome'); // 위에 코드랑 같은 의미
 
-Route::resource('posts', PostController::class); // 한방에 처리하는 방법 (route에 이름을 자동 부여)
+// 한방에 처리하는 방법 (route에 이름을 자동 부여)
+// Route::resource('posts', PostController::class)->middleware('auth');
+// 로그인 한 사람만 접근 가능
+Route::middleware('auth')->group(function (){
+    // 글작성 품
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+    // 글등록 처리
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    // 글수정 폼
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+    // 글수정 처리
+    Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+    // 글삭제 처리
+    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+    // 로그아웃
+    Route::post('/logout', [LoginUserController::class, 'logout'])->name('logout');
+});
+// 글목록
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+// 글 상세보기
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
-Route::get('/register', [RegisterUserController::class, 'register'])->name('register');
-Route::post('/register', [RegisterUserController::class, 'store'])->name('register.store');
-Route::get('/login', [LoginUserController::class, 'login'])->name('login');
-Route::post('/login', [LoginUserController::class, 'store'])->name('login.store');
+// 로그인 하지 않은 사람만 접근근
+Route::middleware('guest')->group(function (){
+    Route::get('/register', [RegisterUserController::class, 'register'])->name('register');
+    Route::post('/register', [RegisterUserController::class, 'store'])->name('register.store');
+    Route::get('/login', [LoginUserController::class, 'login'])->name('login');
+    Route::post('/login', [LoginUserController::class, 'store'])->name('login.store');
+});
 
 // Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 // Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');

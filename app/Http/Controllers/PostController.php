@@ -20,6 +20,7 @@ class PostController extends Controller
         // return view('posts.index', ['name' => $name, 'age' => $age]);
         // return view('posts.index', compact('name', 'age', 'posts'));
         $posts = Post::all();
+        // dd($posts);
 
         return view('posts.index', compact('posts')); // ['posts' => $posts]
     }
@@ -30,6 +31,10 @@ class PostController extends Controller
      */
     public function create()
     {
+        // if (!auth()->check()) {
+        //     abort(403, '로그인이 필요합니다.');
+        // }
+
         //
         return view('posts.create');
     }
