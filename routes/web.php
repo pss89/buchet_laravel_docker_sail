@@ -22,7 +22,9 @@ Route::middleware('auth')->group(function (){
     // 글등록 처리
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
     // 글수정 폼
-    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])
+        ->can('update', 'post')
+        ->name('posts.edit');
     // 글수정 처리
     Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
     // 글삭제 처리

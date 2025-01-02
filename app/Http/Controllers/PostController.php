@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -45,12 +46,24 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // dd($request);
-        Post::create([
-            'title' => $request->title,
-            'content' => $request->content,
+        $validated = $request->validate([
+            'title' => 'required|min:3|max:200',
+            'content' => ['required', 'min:5']
+        ],[
+            'title.required' => '제목은 필수 입력 항목입니다.',
+            'title.min' => '제목은 최소 :min자 이상이어야 합니다.',
+            'title.max' => '제목은 최대 :max자 이하이어야 합니다.',
+            'content.required' => '내용은 필수 입력 항목입니다.',
+            'content.min' => '내용은 최소 :min자 이상이어야 합니다.',
         ]);
+
+        // $validated['user_id'] = auth()->id();
+        // Post::create($validated);
+
+        // 현재 인증된 사용자(auth()->user())를 가져옵니다.
+        // ->posts()를 호출하여 인증된 사용자와 연결된 posts() 관계를 통해 새 게시물을 생성합니다.
+        // ->create($validated)는 유효성 검사를 통과한 데이터를 사용하여 posts 테이블에 새 레코드를 추가합니다.
+        auth()->user()->posts()->create($validated);
 
         return to_route('posts.index');
     }
@@ -75,6 +88,14 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         //
+        // if ($post->user->id != auth()->id()) {
+        //     abort(403, '게시물 작성자만 수정할 수 있습니다.');
+        // }
+
+        // update method를 호출하고 $post를 검사한다
+        // postpolicy 클래스의 update 메서드 호출
+        // Gate::authorize('update', $post);
+
         return view('posts.edit', compact('post'));
     }
 
@@ -92,7 +113,8 @@ class PostController extends Controller
 
         $post->update($validated);
 
-        return to_route('posts.index');
+        // return to_route('posts.index');
+        return to_route('posts.show', ['post' => $post]);
     }
 
     /**
@@ -101,6 +123,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+        Gate::authorize('delete', $post);
         $post->delete();
         return to_route('posts.index');
     }

@@ -22,7 +22,7 @@ class LoginUserController extends Controller
             'email.required' => '이메일은 필수 입력 항목입니다.',
             'email.email' => '이메일 형식이 아닙니다.',
             'password.required' => '비밀번호는 필수 입력 항목입니다.',
-            'password.min' => '비밀번호는 8자 이상이어야 합니다.',
+            'password.min' => '비밀번호는 :min자 이상이어야 합니다.',
             'password.string' => '비밀번호는 문자열로 입력해야 합니다.',
         ]);
 
